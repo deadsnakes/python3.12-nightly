@@ -15,7 +15,7 @@ jobs:
       with:
         path: target
         fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GH_TOKEN }}
     - name: clone runbooks
       uses: actions/checkout@v2
       with:
@@ -46,7 +46,7 @@ jobs:
       with:
         path: target
         fetch-depth: 0
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.GH_TOKEN }}
     - name: clone runbooks
       uses: actions/checkout@v2
       with:
