@@ -993,12 +993,9 @@ endif
 	: # The complete testsuite into $(p_ltst)
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
 		$(scriptdir)/test \
-		$(scriptdir)/ctypes/test \
 		$(scriptdir)/distutils/tests \
-		$(scriptdir)/lib2to3/tests \
 		$(scriptdir)/idlelib/idle_test \
-		$(scriptdir)/tkinter/test \
-		$(scriptdir)/unittest/test
+		$(scriptdir)/tkinter/test
 	: # test_ctypes fails with test_macholib.py installed
 	rm -f $(d_ltst)/$(scriptdir)/ctypes/test/test_macholib.py
 	: # test_bdist_wininst fails, '*.exe' files are not installed
