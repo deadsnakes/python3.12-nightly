@@ -994,8 +994,7 @@ endif
 	$(dh_compat2) dh_movefiles -p$(p_ltst) --sourcedir=$(d) \
 		$(scriptdir)/test \
 		$(scriptdir)/distutils/tests \
-		$(scriptdir)/idlelib/idle_test \
-		$(scriptdir)/tkinter/test
+		$(scriptdir)/idlelib/idle_test
 	: # test_ctypes fails with test_macholib.py installed
 	rm -f $(d_ltst)/$(scriptdir)/ctypes/test/test_macholib.py
 	: # test_bdist_wininst fails, '*.exe' files are not installed
