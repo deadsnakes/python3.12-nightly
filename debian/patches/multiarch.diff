@@ -9,10 +9,10 @@ Subject: multiarch
  3 files changed, 10 insertions(+)
 
 diff --git a/Lib/distutils/sysconfig.py b/Lib/distutils/sysconfig.py
-index 5a41d2d..91058dc 100644
+index 95a89c6..c454adb 100644
 --- a/Lib/distutils/sysconfig.py
 +++ b/Lib/distutils/sysconfig.py
-@@ -302,6 +302,9 @@ def get_python_inc(plat_specific=0, prefix=None):
+@@ -297,6 +297,9 @@ def get_python_inc(plat_specific=0, prefix=None):
                  incdir = os.path.join(get_config_var('srcdir'), 'Include')
                  return os.path.normpath(incdir)
          python_dir = 'python' + get_python_version() + build_flags
@@ -23,10 +23,10 @@ index 5a41d2d..91058dc 100644
      elif os.name == "nt":
          if python_build:
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index eff6113..9769c5e 100644
+index a52592c..cc7703b 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -708,6 +708,12 @@ def get_config_vars(*args):
+@@ -709,6 +709,12 @@ def get_config_vars(*args):
              # the init-function.
              _CONFIG_VARS['userbase'] = _getuserbase()
  
