@@ -740,7 +740,6 @@ class TracebackErrorLocationCaretTests(unittest.TestCase):
             f"Traceback (most recent call last):",
             f"  File \"{__file__}\", line {self.callable_line}, in get_exception",
             f"    callable()",
-            f"    ^^^^^^^^^^",
             f"  File \"{__file__}\", line {f.__code__.co_firstlineno + 2}, in f",
             f"    .method",
             f"     ^^^^^^",
@@ -757,10 +756,8 @@ class TracebackErrorLocationCaretTests(unittest.TestCase):
             f"Traceback (most recent call last):",
             f"  File \"{__file__}\", line {self.callable_line}, in get_exception",
             f"    callable()",
-            f"    ^^^^^^^^^^",
             f"  File \"{__file__}\", line {f.__code__.co_firstlineno + 2}, in f",
             f"    method",
-            f"    ^^^^^^",
         ]
         self.assertEqual(actual, expected)
 
@@ -774,7 +771,6 @@ class TracebackErrorLocationCaretTests(unittest.TestCase):
             f"Traceback (most recent call last):",
             f"  File \"{__file__}\", line {self.callable_line}, in get_exception",
             f"    callable()",
-            f"    ^^^^^^^^^^",
             f"  File \"{__file__}\", line {f.__code__.co_firstlineno + 2}, in f",
             f"    . method",
             f"      ^^^^^^",
@@ -2279,6 +2275,9 @@ class TestStack(unittest.TestCase):
             f'  File "{__file__}", line {lno}, in f\n    1/0\n'
         )
 
+class Unrepresentable:
+    def __repr__(self) -> str:
+        raise Exception("Unrepresentable")
 
 class TestTracebackException(unittest.TestCase):
 
@@ -2546,12 +2545,13 @@ class TestTracebackException(unittest.TestCase):
         linecache.updatecache('/foo.py', globals())
         e = Exception("uh oh")
         c = test_code('/foo.py', 'method')
-        f = test_frame(c, globals(), {'something': 1, 'other': 'string'})
+        f = test_frame(c, globals(), {'something': 1, 'other': 'string', 'unrepresentable': Unrepresentable()})
         tb = test_tb(f, 6, None, 0)
         exc = traceback.TracebackException(
             Exception, e, tb, capture_locals=True)
         self.assertEqual(
-            exc.stack[0].locals, {'something': '1', 'other': "'string'"})
+            exc.stack[0].locals,
+            {'something': '1', 'other': "'string'", 'unrepresentable': '<local repr() failed>'})
 
     def test_no_locals(self):
         linecache.updatecache('/foo.py', globals())
