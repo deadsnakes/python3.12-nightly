@@ -1,4 +1,3 @@
-deb-setup.diff
 deb-locations.diff
 distutils-install-layout.diff
 locale-module.diff
