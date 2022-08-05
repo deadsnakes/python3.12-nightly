@@ -9,10 +9,10 @@ Subject: profiled-build
  1 file changed, 10 insertions(+)
 
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index e1dc503..bd1bc30 100644
+index 98df019..5911eed 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -635,6 +635,16 @@ build_all_generate_profile:
+@@ -631,6 +631,16 @@ build_all_generate_profile:
  run_profile_task:
  	@ # FIXME: can't run for a cross build
  	$(LLVM_PROF_FILE) $(RUNSHARED) ./$(BUILDPYTHON) $(PROFILE_TASK) || true

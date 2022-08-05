@@ -10,9 +10,9 @@ Bug-cpython: https://bugs.python.org/issue37561
 Forwarded: no
 ---
  Lib/sysconfig.py | 2 +-
- Makefile.pre.in  | 7 +++++--
+ Makefile.pre.in  | 6 ++++--
  configure.ac     | 2 +-
- 3 files changed, 7 insertions(+), 4 deletions(-)
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
 index cc7703b..8db6469 100644
@@ -28,10 +28,10 @@ index cc7703b..8db6469 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index fefc468..0e6f01b 100644
+index 49d8576..733593a 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -2086,8 +2086,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+@@ -2059,8 +2059,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
  			esac; \
  		done; \
  	done
@@ -44,19 +44,11 @@ index fefc468..0e6f01b 100644
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
  		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
-@@ -2272,6 +2274,7 @@ sharedinstall: all
- 		--install-scripts=$(BINDIR) \
- 		--install-platlib=$(DESTSHARED) \
- 		--root=$(DESTDIR)/
-+	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py
- 	-rm $(DESTDIR)$(DESTSHARED)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
- 	-rm -r $(DESTDIR)$(DESTSHARED)/__pycache__
- 
 diff --git a/configure.ac b/configure.ac
-index e5f25ba..7723578 100644
+index 70f0cb8..0c8c119 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -140,7 +140,7 @@ AC_ARG_WITH(
+@@ -162,7 +162,7 @@ AC_ARG_WITH(
      dnl Build Python interpreter is used for regeneration and freezing.
      ac_cv_prog_PYTHON_FOR_REGEN=$with_build_python
      PYTHON_FOR_FREEZE="$with_build_python"
