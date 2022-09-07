@@ -15,7 +15,7 @@ Subject: distutils-install-layout
  9 files changed, 130 insertions(+), 24 deletions(-)
 
 diff --git a/Lib/distutils/command/install.py b/Lib/distutils/command/install.py
-index 01d5331..81b501e 100644
+index a22a5d0..dfad8ba 100644
 --- a/Lib/distutils/command/install.py
 +++ b/Lib/distutils/command/install.py
 @@ -33,13 +33,13 @@
