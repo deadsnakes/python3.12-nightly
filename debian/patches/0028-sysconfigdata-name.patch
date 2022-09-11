@@ -28,10 +28,10 @@ index cc7703b..8db6469 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index b15ca12..535a7ee 100644
+index 1496041..d949cc1 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -2111,8 +2111,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+@@ -2115,8 +2115,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
  			esac; \
  		done; \
  	done
@@ -45,7 +45,7 @@ index b15ca12..535a7ee 100644
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
  		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
 diff --git a/configure.ac b/configure.ac
-index 1a6b0be..6df18eb 100644
+index 5e8981a..d8b36f3 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
