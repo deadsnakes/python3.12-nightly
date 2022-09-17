@@ -45,7 +45,7 @@ index 1496041..d949cc1 100644
  	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
  		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
 diff --git a/configure.ac b/configure.ac
-index 5e8981a..d8b36f3 100644
+index c97cdb9..3d0bec9 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
