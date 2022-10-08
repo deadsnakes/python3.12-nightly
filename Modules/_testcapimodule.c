@@ -5210,6 +5210,7 @@ dict_watch_callback(PyDict_WatchEvent event,
         Py_DECREF(msg);
         return -1;
     }
+    Py_DECREF(msg);
     return 0;
 }
 
@@ -5224,8 +5225,10 @@ dict_watch_callback_second(PyDict_WatchEvent event,
         return -1;
     }
     if (PyList_Append(g_dict_watch_events, msg) < 0) {
+        Py_DECREF(msg);
         return -1;
     }
+    Py_DECREF(msg);
     return 0;
 }
 
@@ -5288,6 +5291,20 @@ watch_dict(PyObject *self, PyObject *args)
         return NULL;
     }
     if (PyDict_Watch(watcher_id, dict)) {
+        return NULL;
+    }
+    Py_RETURN_NONE;
+}
+
+static PyObject *
+unwatch_dict(PyObject *self, PyObject *args)
+{
+    PyObject *dict;
+    int watcher_id;
+    if (!PyArg_ParseTuple(args, "iO", &watcher_id, &dict)) {
+        return NULL;
+    }
+    if (PyDict_Unwatch(watcher_id, dict)) {
         return NULL;
     }
     Py_RETURN_NONE;
@@ -5901,6 +5918,7 @@ static PyMethodDef TestMethods[] = {
     {"add_dict_watcher", add_dict_watcher, METH_O, NULL},
     {"clear_dict_watcher", clear_dict_watcher, METH_O, NULL},
     {"watch_dict", watch_dict, METH_VARARGS, NULL},
+    {"unwatch_dict", unwatch_dict, METH_VARARGS, NULL},
     {"get_dict_watcher_events", get_dict_watcher_events, METH_NOARGS, NULL},
     {NULL, NULL} /* sentinel */
 };
