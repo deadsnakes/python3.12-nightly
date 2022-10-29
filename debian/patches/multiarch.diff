@@ -23,24 +23,24 @@ index 95a89c6..c454adb 100644
      elif os.name == "nt":
          if python_build:
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index a52592c..cc7703b 100644
+index 1a08b03..e9ea92d 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
-@@ -709,6 +709,12 @@ def get_config_vars(*args):
-             # the init-function.
-             _CONFIG_VARS['userbase'] = _getuserbase()
+@@ -704,6 +704,12 @@ def _init_config_vars():
+         # the init-function.
+         _CONFIG_VARS['userbase'] = _getuserbase()
  
-+        multiarch = get_config_var('MULTIARCH')
-+        if multiarch:
-+            _CONFIG_VARS['multiarchsubdir'] = '/' + multiarch
-+        else:
-+            _CONFIG_VARS['multiarchsubdir'] = ''
++    multiarch = get_config_var('MULTIARCH')
++    if multiarch:
++        _CONFIG_VARS['multiarchsubdir'] = '/' + multiarch
++    else:
++        _CONFIG_VARS['multiarchsubdir'] = ''
 +
-         # Always convert srcdir to an absolute path
-         srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
-         if os.name == 'posix':
+     # Always convert srcdir to an absolute path
+     srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
+     if os.name == 'posix':
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 07585d6..1a4d8f6 100644
+index 70e80f6..c3ca08d 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -1286,6 +1286,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
