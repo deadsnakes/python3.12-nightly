@@ -40,7 +40,7 @@ index 1a08b03..e9ea92d 100644
      srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
      if os.name == 'posix':
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 70e80f6..c3ca08d 100644
+index 5f2ea90..d2d1c63 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -1286,6 +1286,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
