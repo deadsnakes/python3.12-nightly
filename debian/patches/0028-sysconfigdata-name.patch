@@ -28,10 +28,10 @@ index e9ea92d..2d29515 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index a2a84cb..d0e9913 100644
+index de34577..409afc3 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -2133,8 +2133,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+@@ -2130,8 +2130,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
  			esac; \
  		done; \
  	done
@@ -42,10 +42,10 @@ index a2a84cb..d0e9913 100644
 +	$(LN) -s _sysconfigdata_$(ABIFLAGS)_$(MULTIARCH).py \
 +		$(DESTDIR)$(LIBDEST)/_sysconfigdata_$(ABIFLAGS)_$(MACHDEP)_$(MULTIARCH).py
  	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(LIBDEST)/LICENSE.txt
- 	if test -d $(DESTDIR)$(LIBDEST)/distutils/tests; then \
- 		$(INSTALL_DATA) $(srcdir)/Modules/xxmodule.c \
+ 	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
+ 		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
 diff --git a/configure.ac b/configure.ac
-index 968ce26..c017cd7 100644
+index 72d18db..e674ce3 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
