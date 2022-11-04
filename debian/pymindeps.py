@@ -133,7 +133,7 @@ excluded_imports = {
     'sysconfig': set(('pprint','_osx_support', '_aix_support')),
     'tempfile': set(('_dummy_thread', 'shutil')),
     'functools': set(('typing',)),
-    'platform': set(('plistlib')),
+    'platform': set(('plistlib',)),
     'zipfile': set(('bz2','lzma')),
     'random': set(('statistics',)),
     }
