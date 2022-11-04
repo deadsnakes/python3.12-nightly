@@ -1,8 +1,6 @@
 deb-locations.diff
 distutils-install-layout.diff
 locale-module.diff
-distutils-link.diff
-distutils-sysconfig.diff
 tkinter-import.diff
 gdbm-import.diff
 link-opt.diff
@@ -14,11 +12,8 @@ lib-argparse.diff
 ctypes-arm.diff
 multiarch.diff
 lib2to3-no-pickled-grammar.diff
-ext-no-libpython-link.diff
 test-no-random-order.diff
-multiarch-extname.diff
 tempfile-minimal.diff
-disable-some-tests.diff
 reproducible-buildinfo.diff
 pydoc-use-pager.diff
 argparse-no-shutil.diff
