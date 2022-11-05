@@ -45,7 +45,7 @@ index f7334f4..de8a4f1 100644
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
  		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
 diff --git a/configure.ac b/configure.ac
-index 72d18db..e674ce3 100644
+index cebff60..7f44f2e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
