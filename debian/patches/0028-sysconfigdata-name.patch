@@ -28,10 +28,10 @@ index e9ea92d..2d29515 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 5100ee1..eb4d5cb 100644
+index 5326609..732d34d 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -2132,8 +2132,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+@@ -2135,8 +2135,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
  			esac; \
  		done; \
  	done
@@ -45,7 +45,7 @@ index 5100ee1..eb4d5cb 100644
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST)  $(RUNSHARED) \
  		$(PYTHON_FOR_BUILD) -Wi $(DESTDIR)$(LIBDEST)/compileall.py \
 diff --git a/configure.ac b/configure.ac
-index 58e49e6..4987f97 100644
+index acfde45..676b72a 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
