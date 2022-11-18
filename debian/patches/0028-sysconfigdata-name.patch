@@ -28,7 +28,7 @@ index e9ea92d..2d29515 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 9f1a9e8..690ed89 100644
+index 23a3847..d9a0acb 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -2138,8 +2138,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
