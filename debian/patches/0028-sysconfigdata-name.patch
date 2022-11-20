@@ -15,7 +15,7 @@ Forwarded: no
  3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index e9ea92d..2d29515 100644
+index 3d5e701..7a184ef 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -497,7 +497,7 @@ def _get_sysconfigdata_name():
