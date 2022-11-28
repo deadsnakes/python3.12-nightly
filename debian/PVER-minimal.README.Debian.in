@@ -154,7 +154,7 @@ are:
   uu			module
   warnings		module
   weakref		module
-  zipfile		module
+  zipfile		package
   zipimport		module
   zlib			extension
 
