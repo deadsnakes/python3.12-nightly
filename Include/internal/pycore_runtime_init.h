@@ -26,6 +26,7 @@ extern "C" {
         }, \
         .obmalloc = _obmalloc_state_INIT(runtime.obmalloc), \
         .pyhash_state = pyhash_state_INIT, \
+        .signals = _signals_RUNTIME_INIT, \
         .interpreters = { \
             /* This prevents interpreters from getting created \
               until _PyInterpreterState_Enable() is called. */ \
@@ -50,13 +51,12 @@ extern "C" {
                in accordance with the specification. */ \
             .autoTSSkey = Py_tss_NEEDS_INIT, \
         }, \
-        .tracemalloc = { \
-            .config = _PyTraceMalloc_Config_INIT, \
-        }, \
         .dtoa = _dtoa_runtime_state_INIT(runtime), \
         .fileutils = { \
             .force_ascii = -1, \
         }, \
+        .faulthandler = _faulthandler_runtime_state_INIT, \
+        .tracemalloc = _tracemalloc_runtime_state_INIT, \
         .float_state = { \
             .float_format = _py_float_format_unknown, \
             .double_format = _py_float_format_unknown, \

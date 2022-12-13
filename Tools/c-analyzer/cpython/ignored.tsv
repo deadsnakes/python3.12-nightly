@@ -143,6 +143,12 @@ Modules/syslogmodule.c	-	S_ident_o	-
 Modules/syslogmodule.c	-	S_log_open	-
 
 ##-----------------------
+## kept for stable ABI compatibility
+
+# XXX should be per-interpreter, without impacting stable ABI extensions
+Objects/object.c	-	_Py_RefTotal	-
+
+##-----------------------
 ## one-off temporary state
 
 # used during runtime init
@@ -151,6 +157,7 @@ Python/sysmodule.c	-	_preinit_xoptions	-
 
 # thread-safety
 # XXX need race protection?
+Modules/faulthandler.c	faulthandler_dump_traceback	reentrant	-
 Python/pylifecycle.c	_Py_FatalErrorFormat	reentrant	-
 Python/pylifecycle.c	fatal_error	reentrant	-
 
