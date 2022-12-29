@@ -45,7 +45,7 @@ index 9d8ca09..51e6107 100644
  	@ # Build PYC files for the 3 optimization levels (0, 1, 2)
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 diff --git a/configure.ac b/configure.ac
-index e2ad5f5..d2d07d3 100644
+index 25ff75e..114ea11 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
