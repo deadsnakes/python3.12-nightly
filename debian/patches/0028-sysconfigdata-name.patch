@@ -28,10 +28,10 @@ index 3d5e701..7a184ef 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 7d25d7e..faeefe2 100644
+index c0ad39b..c21dbd4 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -2163,8 +2163,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
+@@ -2160,8 +2160,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
  			esac; \
  		done; \
  	done
@@ -45,7 +45,7 @@ index 7d25d7e..faeefe2 100644
  	@ # Build PYC files for the 3 optimization levels (0, 1, 2)
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 diff --git a/configure.ac b/configure.ac
-index def3d03..7d589e7 100644
+index 66f8974..0d1d352 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -162,7 +162,7 @@ AC_ARG_WITH(
