@@ -663,14 +663,10 @@ dummy_func(
             PREDICT(LOAD_CONST);
         }
 
-        // error: SEND stack effect depends on jump flag
-        inst(SEND) {
+        inst(SEND, (receiver, v -- receiver if (!jump), retval)) {
             assert(frame != &entry_frame);
-            assert(STACK_LEVEL() >= 2);
-            PyObject *v = POP();
-            PyObject *receiver = TOP();
+            bool jump = false;
             PySendResult gen_status;
-            PyObject *retval;
             if (tstate->c_tracefunc == NULL) {
                 gen_status = PyIter_Send(receiver, v, &retval);
             } else {
@@ -695,21 +691,20 @@ dummy_func(
                     gen_status = PYGEN_NEXT;
                 }
             }
-            Py_DECREF(v);
             if (gen_status == PYGEN_ERROR) {
                 assert(retval == NULL);
                 goto error;
             }
+            Py_DECREF(v);
             if (gen_status == PYGEN_RETURN) {
                 assert(retval != NULL);
                 Py_DECREF(receiver);
-                SET_TOP(retval);
                 JUMPBY(oparg);
+                jump = true;
             }
             else {
                 assert(gen_status == PYGEN_NEXT);
                 assert(retval != NULL);
-                PUSH(retval);
             }
         }
 
@@ -739,10 +734,10 @@ dummy_func(
             Py_XSETREF(exc_info->exc_value, exc_value);
         }
 
-        // stack effect: (__0 -- )
-        inst(RERAISE) {
+        inst(RERAISE, (values[oparg], exc -- values[oparg])) {
+            assert(oparg >= 0 && oparg <= 2);
             if (oparg) {
-                PyObject *lasti = PEEK(oparg + 1);
+                PyObject *lasti = values[0];
                 if (PyLong_Check(lasti)) {
                     frame->prev_instr = _PyCode_CODE(frame->f_code) + PyLong_AsLong(lasti);
                     assert(!_PyErr_Occurred(tstate));
@@ -753,11 +748,11 @@ dummy_func(
                     goto error;
                 }
             }
-            PyObject *val = POP();
-            assert(val && PyExceptionInstance_Check(val));
-            PyObject *exc = Py_NewRef(PyExceptionInstance_Class(val));
-            PyObject *tb = PyException_GetTraceback(val);
-            _PyErr_Restore(tstate, exc, val, tb);
+            assert(exc && PyExceptionInstance_Check(exc));
+            Py_INCREF(exc);
+            PyObject *typ = Py_NewRef(PyExceptionInstance_Class(exc));
+            PyObject *tb = PyException_GetTraceback(exc);
+            _PyErr_Restore(tstate, typ, exc, tb);
             goto exception_unwind;
         }
 
@@ -784,18 +779,12 @@ dummy_func(
             }
         }
 
-        // stack effect: (__0, __1 -- )
-        inst(CLEANUP_THROW) {
+        inst(CLEANUP_THROW, (sub_iter, last_sent_val, exc_value -- value)) {
             assert(throwflag);
-            PyObject *exc_value = TOP();
             assert(exc_value && PyExceptionInstance_Check(exc_value));
             if (PyErr_GivenExceptionMatches(exc_value, PyExc_StopIteration)) {
-                PyObject *value = ((PyStopIterationObject *)exc_value)->value;
-                Py_INCREF(value);
-                Py_DECREF(POP());  // The StopIteration.
-                Py_DECREF(POP());  // The last sent value.
-                Py_DECREF(POP());  // The delegated sub-iterator.
-                PUSH(value);
+                value = Py_NewRef(((PyStopIterationObject *)exc_value)->value);
+                DECREF_INPUTS();
             }
             else {
                 PyObject *exc_type = Py_NewRef(Py_TYPE(exc_value));
@@ -2049,31 +2038,30 @@ dummy_func(
             ERROR_IF(iter == NULL, error);
         }
 
-        // stack effect: ( -- )
-        inst(GET_YIELD_FROM_ITER) {
+        inst(GET_YIELD_FROM_ITER, (iterable -- iter)) {
             /* before: [obj]; after [getiter(obj)] */
-            PyObject *iterable = TOP();
-            PyObject *iter;
             if (PyCoro_CheckExact(iterable)) {
                 /* `iterable` is a coroutine */
                 if (!(frame->f_code->co_flags & (CO_COROUTINE | CO_ITERABLE_COROUTINE))) {
                     /* and it is used in a 'yield from' expression of a
                        regular generator. */
-                    Py_DECREF(iterable);
-                    SET_TOP(NULL);
                     _PyErr_SetString(tstate, PyExc_TypeError,
                                      "cannot 'yield from' a coroutine object "
                                      "in a non-coroutine generator");
                     goto error;
                 }
+                iter = iterable;
             }
-            else if (!PyGen_CheckExact(iterable)) {
+            else if (PyGen_CheckExact(iterable)) {
+                iter = iterable;
+            }
+            else {
                 /* `iterable` is not a generator. */
                 iter = PyObject_GetIter(iterable);
-                Py_DECREF(iterable);
-                SET_TOP(iter);
-                if (iter == NULL)
+                if (iter == NULL) {
                     goto error;
+                }
+                Py_DECREF(iterable);
             }
             PREDICT(LOAD_CONST);
         }
@@ -3016,8 +3004,7 @@ dummy_func(
             PUSH((PyObject *)func);
         }
 
-        // stack effect: ( -- )
-        inst(RETURN_GENERATOR) {
+        inst(RETURN_GENERATOR, (--)) {
             assert(PyFunction_Check(frame->f_funcobj));
             PyFunctionObject *func = (PyFunctionObject *)frame->f_funcobj;
             PyGenObject *gen = (PyGenObject *)_Py_MakeCoro(func);
