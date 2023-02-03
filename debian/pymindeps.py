@@ -109,7 +109,7 @@ excluded_imports = {
     'argparse': set(('gettext', 'shutil')),
     'codecs': set(('encodings',)),
     'collections': set(('cPickle', 'pickle', 'doctest')),
-    'compileall': set(('concurrent',)),
+    'compileall': set(('concurrent', 'multiprocessing')),
     'copy': set(('reprlib',)),
     #'functools': set(('_dummy_thread',)),
     'hashlib': set(('logging', '_hashlib')),
