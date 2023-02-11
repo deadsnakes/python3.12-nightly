@@ -1,0 +1,21 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Sat, 11 Feb 2023 14:37:25 -0500
+Subject: also reference hacl in Modules/Setup
+
+---
+ Modules/Setup | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Modules/Setup b/Modules/Setup
+index 91d753d..0d99883 100644
+--- a/Modules/Setup
++++ b/Modules/Setup
+@@ -165,7 +165,7 @@ PYTHONPATH=$(COREPYTHONPATH)
+ #_blake2 _blake2/blake2module.c _blake2/blake2b_impl.c _blake2/blake2s_impl.c
+ #_md5 md5module.c
+ #_sha1 sha1module.c
+-#_sha256 sha256module.c
++#_sha256 sha256module.c _hacl/Hacl_Streaming_SHA2.c
+ #_sha512 sha512module.c
+ #_sha3 _sha3/sha3module.c
+ 
