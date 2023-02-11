@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/deadsnakes/python3.12-nightly/workflows/main/badge.svg)](https://github.com/deadsnakes/python3.12-nightly/actions)
+[![Build Status](https://github.com/deadsnakes/python3.12-nightly/actions/workflows/main.yml/badge.svg)](https://github.com/deadsnakes/python3.12-nightly/actions/workflows/main.yml)
 
 python3.12-nightly
 =================
