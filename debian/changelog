@@ -1,3 +1,9 @@
+python3.12 (3.12.0~a5-52-g3eb12df8b5-1+jammy1) jammy; urgency=medium
+
+  * Update to v3.12.0a5-52-g3eb12df8b5 (2023-02-11).
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 11 Feb 2023 14:35:21 -0500
+
 python3.12 (3.12.0~a4-185-gddd619cffa-1+jammy1) jammy; urgency=medium
 
   * Update to v3.12.0a4-185-gddd619cffa (2023-02-05).
