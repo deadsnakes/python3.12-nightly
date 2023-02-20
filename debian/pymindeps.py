@@ -113,7 +113,7 @@ excluded_imports = {
     'copy': set(('reprlib',)),
     #'functools': set(('_dummy_thread',)),
     'hashlib': set(('logging', '_hashlib')),
-    #'hashlib': set(('_hashlib', '_md5', '_sha', '_sha256','_sha512',)),
+    #'hashlib': set(('_hashlib', '_md5', '_sha', '_sha2',)),
     'heapq': set(('doctest',)),
     'importlib': set(('csv', 'email', 'zipfile')),
     #'io': set(('_dummy_thread',)),

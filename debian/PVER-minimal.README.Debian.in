@@ -36,9 +36,8 @@ are:
   _py_abc		module
   _random		extension
   _sha1			extension
+  _sha2			extension
   _sha3			extension
-  _sha256		extension
-  _sha512		extension
   _signal		builtin
   _sitebuiltins		module
   _socket		extension
