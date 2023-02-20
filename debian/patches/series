@@ -19,4 +19,3 @@ pydoc-use-pager.diff
 argparse-no-shutil.diff
 0028-sysconfigdata-name.patch
 0029-destshared-location.patch
-0022-also-reference-hacl-in-Modules-Setup.patch
