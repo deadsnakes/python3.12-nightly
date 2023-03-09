@@ -8,7 +8,7 @@ Subject: multiarch
  2 files changed, 7 insertions(+)
 
 diff --git a/Lib/sysconfig.py b/Lib/sysconfig.py
-index 30a7ab9..e0af477 100644
+index bb6906a..8d0f5fc 100644
 --- a/Lib/sysconfig.py
 +++ b/Lib/sysconfig.py
 @@ -713,6 +713,12 @@ def _init_config_vars():
