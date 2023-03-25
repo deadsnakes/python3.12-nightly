@@ -2,14 +2,12 @@ From: Ubuntu Core Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 Date: Thu, 14 Feb 2019 18:59:14 -0800
 Subject: tempfile-minimal
 
-# DP: Avoid shutil import when it is not available.
-# DP: Avoid shutil import when it is not available.
 ---
  Lib/tempfile.py | 143 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
  1 file changed, 141 insertions(+), 2 deletions(-)
 
 diff --git a/Lib/tempfile.py b/Lib/tempfile.py
-index bb18d60..634a151 100644
+index 4732eb0..a243413 100644
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py
 @@ -40,7 +40,146 @@
@@ -24,20 +22,20 @@ index bb18d60..634a151 100644
 +  import sys as _sys
 +  import stat as _stat
 +  # version vulnerable to race conditions
-+  def _rmtree_unsafe(path, onerror):
++  def _rmtree_unsafe(path, onexc):
 +    try:
 +        if _os.path.islink(path):
 +            # symlinks to directories are forbidden, see bug #1669
 +            raise OSError("Cannot call rmtree on a symbolic link")
-+    except OSError:
-+        onerror(_os.path.islink, path, _sys.exc_info())
-+        # can't continue even if onerror hook returns
++    except OSError as e:
++        onexc(_os.path.islink, path, e)
++        # can't continue even if onexc hook returns
 +        return
 +    names = []
 +    try:
 +        names = _os.listdir(path)
-+    except OSError:
-+        onerror(_os.listdir, path, _sys.exc_info())
++    except OSError as e:
++        onexc(_os.listdir, path, e)
 +    for name in names:
 +        fullname = _os.path.join(path, name)
 +        try:
@@ -45,25 +43,25 @@ index bb18d60..634a151 100644
 +        except OSError:
 +            mode = 0
 +        if _stat.S_ISDIR(mode):
-+            _rmtree_unsafe(fullname, onerror)
++            _rmtree_unsafe(fullname, onexc)
 +        else:
 +            try:
 +                _os.unlink(fullname)
-+            except OSError:
-+                onerror(_os.unlink, fullname, _sys.exc_info())
++            except OSError as e:
++                onexc(_os.unlink, fullname, e)
 +    try:
 +        _os.rmdir(path)
-+    except OSError:
-+        onerror(_os.rmdir, path, _sys.exc_info())
++    except OSError as e:
++        onexc(_os.rmdir, path, e)
 +
 +  # Version using fd-based APIs to protect against races
-+  def _rmtree_safe_fd(topfd, path, onerror):
++  def _rmtree_safe_fd(topfd, path, onexc):
 +    names = []
 +    try:
 +        names = _os.listdir(topfd)
 +    except OSError as err:
 +        err.filename = path
-+        onerror(_os.listdir, path, _sys.exc_info())
++        onexc(_os.listdir, path, err)
 +    for name in names:
 +        fullname = _os.path.join(path, name)
 +        try:
@@ -74,16 +72,16 @@ index bb18d60..634a151 100644
 +        if _stat.S_ISDIR(mode):
 +            try:
 +                dirfd = _os.open(name, _os.O_RDONLY, dir_fd=topfd)
-+            except OSError:
-+                onerror(_os.open, fullname, _sys.exc_info())
++            except OSError as e:
++                onexc(_os.open, fullname, e)
 +            else:
 +                try:
 +                    if _os.path.samestat(orig_st, _os.fstat(dirfd)):
-+                        _rmtree_safe_fd(dirfd, fullname, onerror)
++                        _rmtree_safe_fd(dirfd, fullname, onexc)
 +                        try:
 +                            _os.rmdir(name, dir_fd=topfd)
-+                        except OSError:
-+                            onerror(_os.rmdir, fullname, _sys.exc_info())
++                        except OSError as e:
++                            onexc(_os.rmdir, fullname, e)
 +                    else:
 +                        try:
 +                            # This can only happen if someone replaces
@@ -91,37 +89,37 @@ index bb18d60..634a151 100644
 +                            # stat.S_ISDIR above.
 +                            raise OSError("Cannot call rmtree on a symbolic "
 +                                          "link")
-+                        except OSError:
-+                            onerror(_os.path.islink, fullname, _sys.exc_info())
++                        except OSError as e:
++                            onexc(_os.path.islink, fullname, e)
 +                finally:
 +                    _os.close(dirfd)
 +        else:
 +            try:
 +                _os.unlink(name, dir_fd=topfd)
-+            except OSError:
-+                onerror(_os.unlink, fullname, _sys.exc_info())
++            except OSError as e:
++                onexc(_os.unlink, fullname, e)
 +
 +  _use_fd_functions = ({_os.open, _os.stat, _os.unlink, _os.rmdir} <=
 +                     _os.supports_dir_fd and
 +                     _os.listdir in _os.supports_fd and
 +                     _os.stat in _os.supports_follow_symlinks)
 +
-+  def _rmtree(path, ignore_errors=False, onerror=None):
++  def _rmtree(path, ignore_errors=False, onexc=None):
 +    """Recursively delete a directory tree.
 +
-+    If ignore_errors is set, errors are ignored; otherwise, if onerror
++    If ignore_errors is set, errors are ignored; otherwise, if onexc
 +    is set, it is called to handle the error with arguments (func,
 +    path, exc_info) where func is platform and implementation dependent;
 +    path is the argument to that function that caused it to fail; and
 +    exc_info is a tuple returned by sys.exc_info().  If ignore_errors
-+    is false and onerror is None, an exception is raised.
++    is false and onexc is None, an exception is raised.
 +
 +    """
 +    if ignore_errors:
-+        def onerror(*args):
++        def onexc(*args):
 +            pass
-+    elif onerror is None:
-+        def onerror(*args):
++    elif onexc is None:
++        def onexc(*args):
 +            raise
 +    if _use_fd_functions:
 +        # While the unsafe rmtree works fine on bytes, the fd based does not.
@@ -131,41 +129,41 @@ index bb18d60..634a151 100644
 +        # lstat()/open()/fstat() trick.
 +        try:
 +            orig_st = _os.lstat(path)
-+        except Exception:
-+            onerror(_os.lstat, path, _sys.exc_info())
++        except Exception as e:
++            onexc(_os.lstat, path, e)
 +            return
 +        try:
 +            fd = _os.open(path, _os.O_RDONLY)
-+        except Exception:
-+            onerror(_os.lstat, path, _sys.exc_info())
++        except Exception as e:
++            onexc(_os.lstat, path, e)
 +            return
 +        try:
 +            if _os.path.samestat(orig_st, _os.fstat(fd)):
-+                _rmtree_safe_fd(fd, path, onerror)
++                _rmtree_safe_fd(fd, path, onexc)
 +                try:
 +                    _os.rmdir(path)
-+                except OSError:
-+                    onerror(_os.rmdir, path, _sys.exc_info())
++                except OSError as e:
++                    onexc(_os.rmdir, path, e)
 +            else:
 +                try:
 +                    # symlinks to directories are forbidden, see bug #1669
 +                    raise OSError("Cannot call rmtree on a symbolic link")
-+                except OSError:
-+                    onerror(_os.path.islink, path, _sys.exc_info())
++                except OSError as e:
++                    onexc(_os.path.islink, path, e)
 +        finally:
 +            _os.close(fd)
 +    else:
-+        return _rmtree_unsafe(path, onerror)
++        return _rmtree_unsafe(path, onexc)
 +
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -891,7 +1030,7 @@ def resetperms(path):
+@@ -900,7 +1039,7 @@ def resetperms(path):
                  if not ignore_errors:
                      raise
  
--        _shutil.rmtree(name, onerror=onerror)
-+        _rmtree(name, onerror=onerror)
+-        _shutil.rmtree(name, onexc=onexc)
++        _rmtree(name, onexc=onexc)
  
      @classmethod
-     def _cleanup(cls, name, warn_message, ignore_errors=False):
+     def _cleanup(cls, name, warn_message, ignore_errors=False, delete=True):
