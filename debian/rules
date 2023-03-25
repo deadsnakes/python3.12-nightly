@@ -944,7 +944,7 @@ endif
 		usr/share/man/man1 \
 		$(scriptdir) \
 		$(scriptdir)/doc/html
-	cp -p Misc/HISTORY Misc/README.valgrind Misc/gdbinit \
+	cp -p Misc/HISTORY Misc/README.valgrind \
 		debian/README.maintainers \
 		debian/test_results $(buildd_static)/pybench.log \
 	    $(d_dev)/usr/share/doc/python$(VER)/
