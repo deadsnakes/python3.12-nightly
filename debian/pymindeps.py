@@ -26,7 +26,6 @@
 
 import os, sys, pprint
 import modulefinder
-import imp
 
 class mymf(modulefinder.ModuleFinder):
     def __init__(self,*args,**kwargs):
@@ -82,10 +81,10 @@ class mymf(modulefinder.ModuleFinder):
 
         if path is None:
             if name in sys.builtin_module_names:
-                return (None, None, ("", "", imp.C_BUILTIN))
+                return (None, None, ("", "", modulefinder._C_BUILTIN))
 
             path = self.path
-        return imp.find_module(name, path)
+        return super().find_module(name, path, parent)
 
     def load_module(self, fqname, fp, pathname, file_info):
         suffix, mode, type = file_info
@@ -98,7 +97,7 @@ class mymf(modulefinder.ModuleFinder):
     def load_package(self, fqname, pathname):
         m = modulefinder.ModuleFinder.load_package(self, fqname,pathname)
         if m is not None:
-            self._types[m.__name__] = imp.PKG_DIRECTORY
+            self._types[m.__name__] = modulefinder._PKG_DIRECTORY
         return m
  
 def reduce_depgraph(dg):
@@ -124,7 +123,7 @@ excluded_imports = {
     # XXX: pathlib actually depends on ntpath: deadsnakes/issues#176
     'pathlib': set(('ntpath', 'urllib',)), # Windows only
     'pickle': set(('argparse', 'doctest', 'pprint')),
-    'platform': set(('ctypes', 'plistlib', 'tempfile')),
+    'platform': set(('plistlib',)),
     'reprlib': set(('_dummy_thread',)),
     'shutil': set(('bz2','lzma', 'tarfile', 'zipfile')),
     #'socket': set(('_ssl',)),
@@ -133,7 +132,6 @@ excluded_imports = {
     'sysconfig': set(('pprint','_osx_support', '_aix_support')),
     'tempfile': set(('_dummy_thread', 'shutil')),
     'functools': set(('typing',)),
-    'platform': set(('plistlib',)),
     'zipfile': set(('bz2','lzma')),
     'random': set(('statistics',)),
     }

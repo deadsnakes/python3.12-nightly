@@ -22,7 +22,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-import sys, getopt, colorsys, imp, hashlib
+import sys, getopt, colorsys, modulefinder, hashlib
 
 class pydepgraphdot:
 
@@ -132,7 +132,7 @@ class pydepgraphdot:
             # references *to* __main__ are never interesting. omitting them means
             # that main floats to the top of the page
             return 1
-        #if type==imp.PKG_DIRECTORY:
+        #if type==modulefinder._PKG_DIRECTORY:
         #    # dont draw references to packages.
         #    return 1
         return 0
@@ -171,7 +171,7 @@ class pydepgraphdot:
         return self.color_from_name(t)
         
     def normalise_module_name_for_hash_coloring(self,s,type):
-        if type==imp.PKG_DIRECTORY:
+        if type==modulefinder._PKG_DIRECTORY:
             return s
         else:
             i = s.rfind('.')

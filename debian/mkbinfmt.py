@@ -1,7 +1,7 @@
 # mkbinfmt.py
-import imp, sys, os.path
+import importlib.util, sys, os.path
 
-magic = "".join(["\\x%.2x" % c for c in imp.get_magic()])
+magic = "".join(["\\x%.2x" % c for c in importlib.util.MAGIC_NUMBER])
 
 name = sys.argv[1]
  
