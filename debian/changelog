@@ -1,3 +1,9 @@
+python3.12 (3.12.0~a7-411-gf5088006ca-1+focal1) focal; urgency=medium
+
+  * Update to v3.12.0a7-411-gf5088006ca (2023-05-06).
+
+ -- Anthony Sottile <asottile@umich.edu>  Sat, 06 May 2023 14:01:11 -0400
+
 python3.12 (3.12.0~a7-346-g8d34031068-1+focal1) focal; urgency=medium
 
   * Update to v3.12.0a7-346-g8d34031068 (2023-05-03).
