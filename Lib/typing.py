@@ -1899,7 +1899,7 @@ class Protocol(Generic, metaclass=_ProtocolMeta):
                     annotations = getattr(base, '__annotations__', {})
                     if (isinstance(annotations, collections.abc.Mapping) and
                             attr in annotations and
-                            issubclass(other, Generic) and other._is_protocol):
+                            issubclass(other, Generic) and getattr(other, '_is_protocol', False)):
                         break
                 else:
                     return NotImplemented
@@ -1917,7 +1917,7 @@ class Protocol(Generic, metaclass=_ProtocolMeta):
             if not (base in (object, Generic) or
                     base.__module__ in _PROTO_ALLOWLIST and
                     base.__name__ in _PROTO_ALLOWLIST[base.__module__] or
-                    issubclass(base, Generic) and base._is_protocol):
+                    issubclass(base, Generic) and getattr(base, '_is_protocol', False)):
                 raise TypeError('Protocols can only inherit from other'
                                 ' protocols, got %r' % base)
         if cls.__init__ is Protocol.__init__:
@@ -2064,7 +2064,7 @@ def runtime_checkable(cls):
     Warning: this will check only the presence of the required methods,
     not their type signatures!
     """
-    if not issubclass(cls, Generic) or not cls._is_protocol:
+    if not issubclass(cls, Generic) or not getattr(cls, '_is_protocol', False):
         raise TypeError('@runtime_checkable can be only applied to protocol classes,'
                         ' got %r' % cls)
     cls._is_runtime_protocol = True
@@ -2715,7 +2715,7 @@ class NamedTupleMeta(type):
 def NamedTuple(typename, fields=None, /, **kwargs):
     """Typed version of namedtuple.
 
-    Usage in Python versions >= 3.6::
+    Usage::
 
         class Employee(NamedTuple):
             name: str
@@ -2732,9 +2732,6 @@ def NamedTuple(typename, fields=None, /, **kwargs):
 
         Employee = NamedTuple('Employee', name=str, id=int)
 
-    In Python versions <= 3.5 use::
-
-        Employee = NamedTuple('Employee', [('name', str), ('id', int)])
     """
     if fields is None:
         fields = kwargs.items()
