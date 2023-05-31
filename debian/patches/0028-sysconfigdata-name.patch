@@ -45,10 +45,10 @@ index 8bc559c..6cb742a 100644
  	@ # Build PYC files for the 3 optimization levels (0, 1, 2)
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 diff --git a/configure.ac b/configure.ac
-index c591e2c..a53050d 100644
+index fccb3e1..5ee6456 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -161,7 +161,7 @@ AC_ARG_WITH(
+@@ -160,7 +160,7 @@ AC_ARG_WITH([build-python],
      dnl Build Python interpreter is used for regeneration and freezing.
      ac_cv_prog_PYTHON_FOR_REGEN=$with_build_python
      PYTHON_FOR_FREEZE="$with_build_python"
