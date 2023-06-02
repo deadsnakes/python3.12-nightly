@@ -2,13 +2,20 @@ dnl ***************************************************
 dnl * Please run autoreconf -if to test your changes! *
 dnl ***************************************************
 dnl
-dnl Python's configure.ac file requires autoconf 2.69 and autoconf-archive.
+dnl Python's configure script requires autoconf 2.71, autoconf-archive,
+dnl pkgconf's m4 macros.
+dnl
+dnl It is recommended to use a cpython_autoconf container to regenerate the
+dnl configure script:
+dnl
+dnl podman run --rm --pull=always -v $(pwd):/src:Z quay.io/tiran/cpython_autoconf:271
+dnl docker run --rm --pull=always -v $(pwd):/src quay.io/tiran/cpython_autoconf:271
 dnl
 
 # Set VERSION so we only need to edit in one place (i.e., here)
 m4_define([PYTHON_VERSION], [3.12])
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.71])
 
 AC_INIT([python],[PYTHON_VERSION],[https://github.com/python/cpython/issues/])
 
@@ -5375,12 +5382,6 @@ fi
 
 AC_CHECK_FUNCS([getnameinfo])
 
-dnl autoconf 2.71 deprecates AC_HEADER_TIME, keep for backwards compatibility
-dnl TIME_WITH_SYS_TIME works on all supported systems that have sys/time.h
-AS_VAR_IF([ac_cv_header_sys_time_h], [yes], [
-  AC_DEFINE([TIME_WITH_SYS_TIME], 1, [Define to 1 if you can safely include both <sys/time.h> and <time.h>.])
-])
-
 # checks for structures
 AC_STRUCT_TM
 AC_STRUCT_TIMEZONE
@@ -7375,7 +7376,9 @@ PY_STDLIB_MOD([syslog], [], [test "$ac_cv_header_syslog_h" = yes])
 PY_STDLIB_MOD([termios], [], [test "$ac_cv_header_termios_h" = yes])
 
 dnl _elementtree loads libexpat via CAPI hook in pyexpat
-PY_STDLIB_MOD([pyexpat], [], [], [$LIBEXPAT_CFLAGS], [$LIBEXPAT_LDFLAGS])
+PY_STDLIB_MOD([pyexpat],
+  [], [test "$ac_cv_header_sys_time_h" = "yes"],
+  [$LIBEXPAT_CFLAGS], [$LIBEXPAT_LDFLAGS])
 PY_STDLIB_MOD([_elementtree], [], [], [$LIBEXPAT_CFLAGS], [])
 PY_STDLIB_MOD_SIMPLE([_codecs_cn])
 PY_STDLIB_MOD_SIMPLE([_codecs_hk])
