@@ -1,0 +1,21 @@
+From: Anthony Sottile <asottile@umich.edu>
+Date: Fri, 2 Jun 2023 18:00:19 -0400
+Subject: actually, don't require autoconf 2.71
+
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 357222d..7017992 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -15,7 +15,7 @@ dnl
+ # Set VERSION so we only need to edit in one place (i.e., here)
+ m4_define([PYTHON_VERSION], [3.12])
+ 
+-AC_PREREQ([2.71])
++AC_PREREQ([2.69])
+ 
+ AC_INIT([python],[PYTHON_VERSION],[https://github.com/python/cpython/issues/])
+ 
