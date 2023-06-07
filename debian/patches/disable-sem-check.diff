@@ -9,10 +9,10 @@ Subject: disable-sem-check
  1 file changed, 22 insertions(+), 12 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index edd5c35..7c050c4 100644
+index 9b5979d..bc68a00 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -5760,12 +5760,17 @@ AC_CACHE_CHECK([whether POSIX semaphores are enabled], [ac_cv_posix_semaphores_e
+@@ -5759,12 +5759,17 @@ AC_CACHE_CHECK([whether POSIX semaphores are enabled], [ac_cv_posix_semaphores_e
    [ac_cv_posix_semaphores_enabled=no],
    [ac_cv_posix_semaphores_enabled=yes])
  )
@@ -36,7 +36,7 @@ index edd5c35..7c050c4 100644
  
  dnl Multiprocessing check for broken sem_getvalue
  AC_CACHE_CHECK([for broken sem_getvalue], [ac_cv_broken_sem_getvalue],
-@@ -5797,12 +5802,17 @@ AC_CACHE_CHECK([for broken sem_getvalue], [ac_cv_broken_sem_getvalue],
+@@ -5796,12 +5801,17 @@ AC_CACHE_CHECK([for broken sem_getvalue], [ac_cv_broken_sem_getvalue],
    [ac_cv_broken_sem_getvalue=yes],
    [ac_cv_broken_sem_getvalue=yes])
  )
@@ -58,5 +58,5 @@ index edd5c35..7c050c4 100644
 +  esac
 +fi
  
- AC_CHECK_DECLS([RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL, RTLD_LOCAL, RTLD_NODELETE, RTLD_NOLOAD, RTLD_DEEPBIND, RTLD_MEMBER], [], [], [[#include <dlfcn.h>]])
+ AC_CHECK_DECLS([RTLD_LAZY, RTLD_NOW, RTLD_GLOBAL, RTLD_LOCAL, RTLD_NODELETE, RTLD_NOLOAD, RTLD_DEEPBIND, RTLD_MEMBER], [], [], [[@%:@include <dlfcn.h>]])
  
