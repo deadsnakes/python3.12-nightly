@@ -414,7 +414,7 @@ def check_sanitizer(*, address=False, memory=False, ub=False):
     )
     address_sanitizer = (
         '-fsanitize=address' in _cflags or
-        '--with-memory-sanitizer' in _config_args
+        '--with-address-sanitizer' in _config_args
     )
     ub_sanitizer = (
         '-fsanitize=undefined' in _cflags or
@@ -1868,15 +1868,16 @@ def missing_compiler_executable(cmd_names=[]):
     missing.
 
     """
-    # TODO (PEP 632): alternate check without using distutils
-    from distutils import ccompiler, sysconfig, spawn, errors
+    from setuptools._distutils import ccompiler, sysconfig, spawn
+    from setuptools import errors
+
     compiler = ccompiler.new_compiler()
     sysconfig.customize_compiler(compiler)
     if compiler.compiler_type == "msvc":
         # MSVC has no executables, so check whether initialization succeeds
         try:
             compiler.initialize()
-        except errors.DistutilsPlatformError:
+        except errors.PlatformError:
             return "msvc"
     for name in compiler.executables:
         if cmd_names and name not in cmd_names:

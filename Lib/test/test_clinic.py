@@ -100,9 +100,8 @@ class ClinicWholeFileTest(TestCase):
         # the last line of the block got corrupted.
         c = clinic.Clinic(clinic.CLanguage(None), filename="file")
         raw = "/*[clinic]\nfoo\n[clinic]*/"
-        cooked, _ = c.parse(raw)
-        lines = cooked.splitlines()
-        end_line = lines[2].rstrip()
+        cooked = c.parse(raw).splitlines()
+        end_line = cooked[2].rstrip()
         # this test is redundant, it's just here explicitly to catch
         # the regression test so we don't forget what it looked like
         self.assertNotEqual(end_line, "[clinic]*/[clinic]*/")
@@ -261,7 +260,7 @@ xyz
         c = clinic.Clinic(language, filename="file")
         c.parsers['inert'] = InertParser(c)
         c.parsers['copy'] = CopyParser(c)
-        computed, _ = c.parse(input)
+        computed = c.parse(input)
         self.assertEqual(output, computed)
 
     def test_clinic_1(self):
@@ -1089,15 +1088,16 @@ class ClinicExternalTest(TestCase):
     maxDiff = None
 
     def test_external(self):
+        CLINIC_TEST = 'clinic.test.c'
         # bpo-42398: Test that the destination file is left unchanged if the
         # content does not change. Moreover, check also that the file
         # modification time does not change in this case.
-        source = support.findfile('clinic.test')
+        source = support.findfile(CLINIC_TEST)
         with open(source, 'r', encoding='utf-8') as f:
             orig_contents = f.read()
 
         with os_helper.temp_dir() as tmp_dir:
-            testfile = os.path.join(tmp_dir, 'clinic.test.c')
+            testfile = os.path.join(tmp_dir, CLINIC_TEST)
             with open(testfile, 'w', encoding='utf-8') as f:
                 f.write(orig_contents)
             old_mtime_ns = os.stat(testfile).st_mtime_ns
