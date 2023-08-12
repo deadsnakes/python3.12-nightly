@@ -1071,16 +1071,6 @@ call_instrumentation_vector_protected(
 }
 
 void
-_Py_call_instrumentation_exc0(
-    PyThreadState *tstate, int event,
-    _PyInterpreterFrame *frame, _Py_CODEUNIT *instr)
-{
-    assert(_PyErr_Occurred(tstate));
-    PyObject *args[3] = { NULL, NULL, NULL };
-    call_instrumentation_vector_protected(tstate, event, frame, instr, 2, args);
-}
-
-void
 _Py_call_instrumentation_exc2(
     PyThreadState *tstate, int event,
     _PyInterpreterFrame *frame, _Py_CODEUNIT *instr, PyObject *arg0, PyObject *arg1)
@@ -1866,6 +1856,9 @@ monitoring_register_callback_impl(PyObject *module, int tool_id, int event,
     int event_id = _Py_bit_length(event)-1;
     if (event_id < 0 || event_id >= _PY_MONITORING_EVENTS) {
         PyErr_Format(PyExc_ValueError, "invalid event %d", event);
+        return NULL;
+    }
+    if (PySys_Audit("sys.monitoring.register_callback", "O", func) < 0) {
         return NULL;
     }
     if (func == Py_None) {
