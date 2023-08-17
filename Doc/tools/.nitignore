@@ -4,7 +4,6 @@
 # to help avoid merge conflicts.
 
 Doc/c-api/arg.rst
-Doc/c-api/buffer.rst
 Doc/c-api/datetime.rst
 Doc/c-api/descriptor.rst
 Doc/c-api/dict.rst
@@ -69,7 +68,6 @@ Doc/library/configparser.rst
 Doc/library/contextlib.rst
 Doc/library/copy.rst
 Doc/library/csv.rst
-Doc/library/ctypes.rst
 Doc/library/datetime.rst
 Doc/library/dbm.rst
 Doc/library/decimal.rst
