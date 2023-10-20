@@ -49,7 +49,6 @@ Doc/library/calendar.rst
 Doc/library/cgi.rst
 Doc/library/chunk.rst
 Doc/library/cmd.rst
-Doc/library/codecs.rst
 Doc/library/collections.abc.rst
 Doc/library/collections.rst
 Doc/library/concurrent.futures.rst
@@ -76,7 +75,6 @@ Doc/library/ftplib.rst
 Doc/library/functions.rst
 Doc/library/functools.rst
 Doc/library/getopt.rst
-Doc/library/getpass.rst
 Doc/library/gettext.rst
 Doc/library/gzip.rst
 Doc/library/http.client.rst
@@ -136,7 +134,6 @@ Doc/library/tkinter.scrolledtext.rst
 Doc/library/tkinter.tix.rst
 Doc/library/tkinter.ttk.rst
 Doc/library/traceback.rst
-Doc/library/tty.rst
 Doc/library/unittest.mock.rst
 Doc/library/unittest.rst
 Doc/library/urllib.parse.rst
