@@ -28,7 +28,7 @@ index 8d0f5fc..8ca8f83 100644
  
  
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index fb4fe6a..4f95dfa 100644
+index 3b7a9b2..725d644 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
 @@ -2312,8 +2312,10 @@ libinstall:	all $(srcdir)/Modules/xxmodule.c
@@ -45,10 +45,10 @@ index fb4fe6a..4f95dfa 100644
  	@ # Build PYC files for the 3 optimization levels (0, 1, 2)
  	-PYTHONPATH=$(DESTDIR)$(LIBDEST) $(RUNSHARED) \
 diff --git a/configure.ac b/configure.ac
-index 16ed2b9..ae2bb59 100644
+index f0bf01e..e2ad3f6 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -167,7 +167,7 @@ AC_ARG_WITH([build-python],
+@@ -164,7 +164,7 @@ AC_ARG_WITH([build-python],
      dnl Build Python interpreter is used for regeneration and freezing.
      ac_cv_prog_PYTHON_FOR_REGEN=$with_build_python
      PYTHON_FOR_FREEZE="$with_build_python"
