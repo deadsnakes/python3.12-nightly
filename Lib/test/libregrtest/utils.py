@@ -12,7 +12,7 @@ import sys
 import sysconfig
 import tempfile
 import textwrap
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 
 from test import support
 from test.support import os_helper
@@ -377,10 +377,19 @@ def get_temp_dir(tmp_dir: StrPath | None = None) -> StrPath:
                         # Python out of the source tree, especially when the
                         # source tree is read only.
                         tmp_dir = sysconfig.get_config_var('srcdir')
+                        if not tmp_dir:
+                            raise RuntimeError(
+                                "Could not determine the correct value for tmp_dir"
+                            )
                 tmp_dir = os.path.join(tmp_dir, 'build')
             else:
                 # WASI platform
                 tmp_dir = sysconfig.get_config_var('projectbase')
+                if not tmp_dir:
+                    raise RuntimeError(
+                        "sysconfig.get_config_var('projectbase') "
+                        f"unexpectedly returned {tmp_dir!r} on WASI"
+                    )
                 tmp_dir = os.path.join(tmp_dir, 'build')
 
                 # When get_temp_dir() is called in a worker process,
@@ -547,7 +556,7 @@ def is_cross_compiled():
     return ('_PYTHON_HOST_PLATFORM' in os.environ)
 
 
-def format_resources(use_resources: tuple[str, ...]):
+def format_resources(use_resources: Iterable[str]):
     use_resources = set(use_resources)
     all_resources = set(ALL_RESOURCES)
 
@@ -587,7 +596,7 @@ def display_header(use_resources: tuple[str, ...],
     print("== Python build:", ' '.join(get_build_info()))
     print("== cwd:", os.getcwd())
 
-    cpu_count = os.cpu_count()
+    cpu_count: object = os.cpu_count()
     if cpu_count:
         affinity = process_cpu_count()
         if affinity and affinity != cpu_count:
