@@ -7,15 +7,14 @@ Subject: tempfile-minimal
  1 file changed, 141 insertions(+), 2 deletions(-)
 
 diff --git a/Lib/tempfile.py b/Lib/tempfile.py
-index 55403ad..216f4bb 100644
+index cbfc172..58bae73 100644
 --- a/Lib/tempfile.py
 +++ b/Lib/tempfile.py
-@@ -40,8 +40,147 @@
+@@ -40,7 +40,146 @@
  import warnings as _warnings
  import io as _io
  import os as _os
 -import shutil as _shutil
- import stat as _stat
 +try:
 +  import shutil as _shutil
 +  _rmtree = _shutil.rmtree
@@ -159,7 +158,7 @@ index 55403ad..216f4bb 100644
  import errno as _errno
  from random import Random as _Random
  import sys as _sys
-@@ -924,7 +1063,7 @@ def resetperms(path):
+@@ -927,7 +1066,7 @@ def onexc(func, path, exc):
                  if not ignore_errors:
                      raise
  
