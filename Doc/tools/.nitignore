@@ -45,7 +45,6 @@ Doc/library/collections.abc.rst
 Doc/library/collections.rst
 Doc/library/concurrent.futures.rst
 Doc/library/configparser.rst
-Doc/library/contextlib.rst
 Doc/library/copy.rst
 Doc/library/csv.rst
 Doc/library/datetime.rst
@@ -82,7 +81,6 @@ Doc/library/multiprocessing.shared_memory.rst
 Doc/library/nntplib.rst
 Doc/library/numbers.rst
 Doc/library/optparse.rst
-Doc/library/os.path.rst
 Doc/library/os.rst
 Doc/library/ossaudiodev.rst
 Doc/library/pickle.rst
@@ -98,7 +96,6 @@ Doc/library/readline.rst
 Doc/library/resource.rst
 Doc/library/rlcompleter.rst
 Doc/library/select.rst
-Doc/library/shelve.rst
 Doc/library/signal.rst
 Doc/library/smtplib.rst
 Doc/library/socket.rst
