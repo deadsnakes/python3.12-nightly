@@ -41,7 +41,6 @@ Doc/library/calendar.rst
 Doc/library/cgi.rst
 Doc/library/chunk.rst
 Doc/library/cmd.rst
-Doc/library/collections.abc.rst
 Doc/library/collections.rst
 Doc/library/concurrent.futures.rst
 Doc/library/configparser.rst
@@ -67,18 +66,15 @@ Doc/library/http.client.rst
 Doc/library/http.cookiejar.rst
 Doc/library/http.server.rst
 Doc/library/importlib.rst
-Doc/library/inspect.rst
 Doc/library/locale.rst
 Doc/library/logging.config.rst
 Doc/library/logging.handlers.rst
 Doc/library/lzma.rst
-Doc/library/mailbox.rst
 Doc/library/mmap.rst
 Doc/library/msilib.rst
 Doc/library/multiprocessing.rst
 Doc/library/multiprocessing.shared_memory.rst
 Doc/library/nntplib.rst
-Doc/library/numbers.rst
 Doc/library/optparse.rst
 Doc/library/os.rst
 Doc/library/ossaudiodev.rst
@@ -93,7 +89,6 @@ Doc/library/pyexpat.rst
 Doc/library/random.rst
 Doc/library/readline.rst
 Doc/library/resource.rst
-Doc/library/rlcompleter.rst
 Doc/library/select.rst
 Doc/library/signal.rst
 Doc/library/smtplib.rst
@@ -104,7 +99,6 @@ Doc/library/string.rst
 Doc/library/subprocess.rst
 Doc/library/sunau.rst
 Doc/library/syslog.rst
-Doc/library/tarfile.rst
 Doc/library/telnetlib.rst
 Doc/library/termios.rst
 Doc/library/test.rst
@@ -112,7 +106,6 @@ Doc/library/tkinter.rst
 Doc/library/tkinter.scrolledtext.rst
 Doc/library/tkinter.tix.rst
 Doc/library/tkinter.ttk.rst
-Doc/library/traceback.rst
 Doc/library/unittest.mock.rst
 Doc/library/unittest.rst
 Doc/library/urllib.parse.rst
@@ -133,13 +126,11 @@ Doc/reference/compound_stmts.rst
 Doc/reference/datamodel.rst
 Doc/reference/expressions.rst
 Doc/reference/import.rst
-Doc/reference/simple_stmts.rst
 Doc/tutorial/datastructures.rst
 Doc/using/windows.rst
 Doc/whatsnew/2.0.rst
 Doc/whatsnew/2.1.rst
 Doc/whatsnew/2.2.rst
-Doc/whatsnew/2.3.rst
 Doc/whatsnew/2.4.rst
 Doc/whatsnew/2.5.rst
 Doc/whatsnew/2.6.rst
