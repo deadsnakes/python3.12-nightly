@@ -3,6 +3,7 @@ on:
     branches: [main]
   schedule:
     - cron: '45 8 * * *'
+  workflow_dispatch:
 
 jobs:
   main:
