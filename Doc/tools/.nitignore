@@ -5,7 +5,6 @@
 Doc/c-api/arg.rst
 Doc/c-api/descriptor.rst
 Doc/c-api/exceptions.rst
-Doc/c-api/file.rst
 Doc/c-api/float.rst
 Doc/c-api/gcsupport.rst
 Doc/c-api/init.rst
@@ -59,7 +58,6 @@ Doc/library/nntplib.rst
 Doc/library/optparse.rst
 Doc/library/os.rst
 Doc/library/ossaudiodev.rst
-Doc/library/pickle.rst
 Doc/library/pickletools.rst
 Doc/library/platform.rst
 Doc/library/plistlib.rst
