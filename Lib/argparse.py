@@ -225,7 +225,8 @@ class HelpFormatter(object):
             # add the heading if the section was non-empty
             if self.heading is not SUPPRESS and self.heading is not None:
                 current_indent = self.formatter._current_indent
-                heading = '%*s%s:\n' % (current_indent, '', self.heading)
+                heading_text = _('%(heading)s:') % dict(heading=self.heading)
+                heading = '%*s%s\n' % (current_indent, '', heading_text)
             else:
                 heading = ''
 
@@ -722,7 +723,7 @@ class ArgumentDefaultsHelpFormatter(HelpFormatter):
             if action.default is not SUPPRESS:
                 defaulting_nargs = [OPTIONAL, ZERO_OR_MORE]
                 if action.option_strings or action.nargs in defaulting_nargs:
-                    help += ' (default: %(default)s)'
+                    help += _(' (default: %(default)s)')
         return help
 
 
@@ -1151,7 +1152,9 @@ class _VersionAction(Action):
                  version=None,
                  dest=SUPPRESS,
                  default=SUPPRESS,
-                 help="show program's version number and exit"):
+                 help=None):
+        if help is None:
+            help = _("show program's version number and exit")
         super(_VersionAction, self).__init__(
             option_strings=option_strings,
             dest=dest,
