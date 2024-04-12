@@ -1778,7 +1778,7 @@ if test "$Py_OPT" = 'true' ; then
       AX_CHECK_COMPILE_FLAG([-fno-semantic-interposition],[
       CFLAGS_NODIST="$CFLAGS_NODIST -fno-semantic-interposition"
       LDFLAGS_NODIST="$LDFLAGS_NODIST -fno-semantic-interposition"
-      ])
+      ], [], [-Werror])
       ;;
   esac
 elif test "$ac_sys_system" = "Emscripten" -o "$ac_sys_system" = "WASI"; then
@@ -1989,7 +1989,7 @@ case $CC in
     PGO_PROF_GEN_FLAG="-fprofile-instr-generate"
     PGO_PROF_USE_FLAG="-fprofile-instr-use=code.profclangd"
     LLVM_PROF_MERGER="${LLVM_PROFDATA} merge -output=code.profclangd *.profclangr"
-    LLVM_PROF_FILE="LLVM_PROFILE_FILE=\"code-%p.profclangr\""
+    LLVM_PROF_FILE="LLVM_PROFILE_FILE=\"\$(shell pwd)/code-%p.profclangr\""
     if test $LLVM_PROF_FOUND = not-found
     then
       LLVM_PROF_ERR=yes
@@ -2005,7 +2005,7 @@ case $CC in
         PGO_PROF_GEN_FLAG="-fprofile-instr-generate"
         PGO_PROF_USE_FLAG="-fprofile-instr-use=code.profclangd"
         LLVM_PROF_MERGER="${LLVM_PROFDATA} merge -output=code.profclangd *.profclangr"
-        LLVM_PROF_FILE="LLVM_PROFILE_FILE=\"code-%p.profclangr\""
+        LLVM_PROF_FILE="LLVM_PROFILE_FILE=\"\$(shell pwd)/code-%p.profclangr\""
         if test "${LLVM_PROF_FOUND}" = "not-found"
         then
           LLVM_PROF_ERR=yes
