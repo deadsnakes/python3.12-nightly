@@ -25,10 +25,10 @@ index bb6906a..8d0f5fc 100644
      srcdir = _CONFIG_VARS.get('srcdir', _PROJECT_BASE)
      if os.name == 'posix':
 diff --git a/Makefile.pre.in b/Makefile.pre.in
-index 548a4ec..45edcca 100644
+index 4a957fb..56a67a4 100644
 --- a/Makefile.pre.in
 +++ b/Makefile.pre.in
-@@ -1368,6 +1368,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
+@@ -1370,6 +1370,7 @@ Modules/signalmodule.o: $(srcdir)/Modules/signalmodule.c $(srcdir)/Modules/posix
  
  Python/dynload_shlib.o: $(srcdir)/Python/dynload_shlib.c Makefile
  	$(CC) -c $(PY_CORE_CFLAGS) \
