@@ -1,3 +1,9 @@
+python3.12 (3.12.4-76-gb64488545f-1+jammy1) jammy; urgency=medium
+
+  * Update to v3.12.4-76-gb64488545f (2024-06-23).
+
+ -- Anthony Sottile (deadsnakes) <asottile+deadsnakes@umich.edu>  Sun, 23 Jun 2024 08:50:51 +0000
+
 python3.12 (3.12.4-72-gf1acb3a592-1+jammy1) jammy; urgency=medium
 
   * Update to v3.12.4-72-gf1acb3a592 (2024-06-22).
